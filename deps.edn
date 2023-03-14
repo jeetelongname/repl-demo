@@ -1,0 +1,19 @@
+{:paths ["src"]
+ :deps
+ {org.clojure/clojure {:mvn/version "1.11.1"}
+  ring/ring-core {:mvn/version "1.9.6"}
+  ring/ring-jetty-adapter {:mvn/version "1.9.6"}
+  metosin/reitit-ring {:mvn/version "0.6.0"}
+  hiccup/hiccup {:mvn/version "2.0.0-alpha2"}}
+
+ :aliases
+ {:neil {:project {:name demo3/demo3}}
+
+  :build ;; added by neil
+  {:deps {io.github.clojure/tools.build {:git/tag "v0.9.4" :git/sha "76b78fe"}
+          slipset/deps-deploy {:mvn/version "0.2.0"}}
+   :ns-default build}
+
+  :nrepl ;; added by neil
+  {:extra-deps {nrepl/nrepl {:mvn/version "1.1.0-alpha1"}}
+   :main-opts ["-m" "nrepl.cmdline" "--interactive" "--color"]}}}
