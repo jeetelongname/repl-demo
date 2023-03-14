@@ -17,7 +17,22 @@
   {:status 200
    :headers {"Content-Type" "text/html"}
    :body #_{:clj-kondo/ignore [:deprecated-var]}
-   (h/html (document [:h1 [:bold "Hello everyone"]]))})
+   (h/html (document [:h1 [:bold "Hello everyone"]]
+                     [:p "pay attention Joe"]))})
+
+(defn sum-number
+  ""
+  [number]
+  ;; (loop [n number sum 0]
+  ;;   (cond
+  ;;     (< n 0) "out of bounds"
+  ;;     (nil? n) "No number provided"
+  ;;     ;; (= number 13) "Error"
+  ;;     (= 0 n)  (str sum)
+  ;;     :else (recur (dec n) (+ sum n))))
+  (if (nil? number)
+    "No number provided"
+    (/ (* number (inc number)) 2)))
 
 (defn sum-handler
   [request]
@@ -28,19 +43,7 @@
                      last
                      parse-long)
                  nil)
-
-        number-str (loop [n number sum 0]
-                     (cond
-                       (nil? n) "No number provided"
-                       (= number 13) "Error"
-                       (= 0 n)  (str sum)
-                       :else (recur (dec n) (+ sum n))))
-
-        ;; number-str (if (nil? number)
-        ;;              "No number provided"
-        ;;              (/ (* number (inc number)) 2))
-        ]
-
+        number-str (sum-number number)]
     {:status 200
      :headers {"Content-Type" "text/html"}
      :body (h/html (document
@@ -59,7 +62,7 @@
    :body (h/html
           (document
            [:h1 "Hello from " [:em (:uri request)]]
-           [:p "somehting"]))})
+           [:p "Hi Joe"]))})
 
 (defn app
   [request]
@@ -67,7 +70,7 @@
   (let [handler (get router (:uri request) #'default)]
     (handler request)))
 
-(def start #(j/run-jetty #'app {:port 3000 :join? false}))
+(def start #(j/run-jetty #'app {:port 3001 :join? false}))
 
 (defn -main []
   (start))
